@@ -1,0 +1,35 @@
+main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#game {
+    display: flex;
+    flex: 1;
+}
+
+ul {
+    border: 1px solid black;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    padding: 10px;
+}
+
+li {
+    border: 1px solid black;
+    border-radius: 1em;
+    margin: 5px;
+    padding: 5px;
+}
+
+#controls {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}

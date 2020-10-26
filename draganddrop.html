@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="draganddrop.css">
+</head>
+
+<body>
+    <header></header>
+    <main>
+        <section id="instruction">Consigne : Ordonner la liste des planètes du système solaire selon la distance croissante avec le soleil</section>
+        <section id="game">
+            <ul id="source">
+            </ul>
+            <ul id="target" ondrop="drop_handler(event)" ondragover="dragover_handler(event)"></ul>
+        </section>
+        <section id="controls">
+            <button id="reset">reset</button>
+            <button id="submit">submit</button>
+        </section>
+    </main>
+    <footer></footer>
+</body>
+<script>
+
+    // global variables
+    var unordenedList = ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"];
+    var ordenedList = [];
+    const source = document.querySelector("#source");
+    const target = document.querySelector("#target");
+    const btnReset = document.querySelector("#reset");
+
+
+    function renderList() {
+        unordenedList.forEach(itemName => {
+            let item = document.createElement("li");
+            item.textContent = itemName;
+            item.setAttribute("id", itemName);
+            item.setAttribute("draggable", true);
+            item.addEventListener("dragstart", dragstart_handler);
+            source.appendChild(item);
+        });
+    }
+
+    function resetList() {
+        clearLists();
+        renderList();
+    }
+
+    function clearLists() {
+        let items = document.querySelectorAll("li");
+        items.forEach(item => item.remove());
+    }
+
+    function dragstart_handler(ev) {
+        // Add the target element's id to the data transfer object
+        ev.dataTransfer.setData("application/my-app", ev.target.id);
+        ev.dataTransfer.dropEffect = "move";
+    }
+
+    function dragover_handler(ev) {
+        ev.preventDefault();
+        ev.dataTransfer.dropEffect = "move"
+    }
+
+    function drop_handler(ev) {
+        ev.preventDefault();
+        // Get the id of the target and add the moved element to the target's DOM
+        const data = ev.dataTransfer.getData("application/my-app");
+        ev.target.appendChild(document.getElementById(data));
+    }
+
+    target.addEventListener("dragover", dragover_handler);
+    target.addEventListener("drop", drop_handler);
+    btnReset.addEventListener("click", resetList)
+    renderList();
+
+</script>
+
+</html>
