@@ -13,7 +13,7 @@
         <section id="game">
             <ul id="source">
             </ul>
-            <ul id="target" ondrop="drop_handler(event)" ondragover="dragover_handler(event)"></ul>
+            <ul id="target"></ul>
         </section>
         <section id="controls">
             <button id="reset">reset</button>
@@ -32,7 +32,7 @@
     const btnReset = document.querySelector("#reset");
 
 
-    function renderList() {
+    function renderUnordonnedList() {
         unordenedList.forEach(itemName => {
             let item = document.createElement("li");
             item.textContent = itemName;
@@ -43,9 +43,20 @@
         });
     }
 
+    function renderOrdonedList() {
+        ordenedList.forEach(itemName => {
+            let item = document.createElement("li");
+            item.textContent = itemName;
+            item.setAttribute("id", itemName);
+            item.setAttribute("draggable", true);
+            item.addEventListener("dragstart", dragstart_handler);
+            target.appendChild(item);
+        });
+    }
+
     function resetList() {
         clearLists();
-        renderList();
+        renderUnordonnedList();
     }
 
     function clearLists() {
@@ -71,10 +82,18 @@
         ev.target.appendChild(document.getElementById(data));
     }
 
+    // drop zone
+    source.addEventListener("dragover", dragover_handler);
+    source.addEventListener("drop", drop_handler);
     target.addEventListener("dragover", dragover_handler);
     target.addEventListener("drop", drop_handler);
+
+    // buttons
     btnReset.addEventListener("click", resetList)
-    renderList();
+
+    // init
+    renderUnordonnedList();
+    renderOrdonedList();
 
 </script>
 
