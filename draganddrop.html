@@ -56,6 +56,7 @@
 
     function resetList() {
         clearLists();
+        ordenedList = [];
         renderUnordonnedList();
     }
 
@@ -75,18 +76,33 @@
         ev.dataTransfer.dropEffect = "move"
     }
 
-    function drop_handler(ev) {
+    function drop_handler_target(ev) {
         ev.preventDefault();
         // Get the id of the target and add the moved element to the target's DOM
         const data = ev.dataTransfer.getData("application/my-app");
-        ev.target.appendChild(document.getElementById(data));
+        ordenedList.push(data);
+        unordenedList.splice(unordenedList.indexOf(data), 1);
+        clearLists();
+        renderOrdonedList();
+        renderUnordonnedList();
+    }
+
+    function drop_handler_source(ev) {
+        ev.preventDefault();
+        // Get the id of the target and add the moved element to the target's DOM
+        const data = ev.dataTransfer.getData("application/my-app");
+        unordenedList.push(data);
+        ordenedList.splice(ordenedList.indexOf(data), 1);
+        clearLists();
+        renderOrdonedList();
+        renderUnordonnedList();
     }
 
     // drop zone
     source.addEventListener("dragover", dragover_handler);
-    source.addEventListener("drop", drop_handler);
+    source.addEventListener("drop", drop_handler_source);
     target.addEventListener("dragover", dragover_handler);
-    target.addEventListener("drop", drop_handler);
+    target.addEventListener("drop", drop_handler_target);
 
     // buttons
     btnReset.addEventListener("click", resetList)
