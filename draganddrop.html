@@ -101,15 +101,30 @@
     }
 
     function submit() {
+        let winMessage = "YOU WIN";
+        let loseMessage = "YOU LOSE";
         if(hadWon()) {
-            console.log("you won");
+            displayMessage(winMessage);
+            setTimeout(clearMessage, 3000);
         }else{
-            console.log("try again");
+            displayMessage(loseMessage);
+            setTimeout(clearMessage, 3000);
         }
     }
 
     function hadWon() {
         return ordenedList.toString() == answer.toString();
+    }
+
+    function displayMessage(message) {
+        let instructionElement = document.querySelector("#instruction");
+        let flashMessage = document.createElement("p");
+        flashMessage.textContent = message;
+        instructionElement.appendChild(flashMessage);
+    }
+
+    function clearMessage() {
+        document.querySelector("#instruction p").remove();
     }
 
     // drop zone
