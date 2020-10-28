@@ -25,11 +25,13 @@
 <script>
 
     // global variables
+    var answer = ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"];
     var unordenedList = ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"];
     var ordenedList = [];
     const source = document.querySelector("#source");
     const target = document.querySelector("#target");
     const btnReset = document.querySelector("#reset");
+    const btnSubmit = document.querySelector("#submit");
 
 
     function renderUnordonnedList() {
@@ -98,6 +100,18 @@
         renderUnordonnedList();
     }
 
+    function submit() {
+        if(hadWon()) {
+            console.log("you won");
+        }else{
+            console.log("try again");
+        }
+    }
+
+    function hadWon() {
+        return ordenedList.toString() == answer.toString();
+    }
+
     // drop zone
     source.addEventListener("dragover", dragover_handler);
     source.addEventListener("drop", drop_handler_source);
@@ -105,7 +119,8 @@
     target.addEventListener("drop", drop_handler_target);
 
     // buttons
-    btnReset.addEventListener("click", resetList)
+    btnReset.addEventListener("click", resetList);
+    btnSubmit.addEventListener("click", submit);
 
     // init
     renderUnordonnedList();
