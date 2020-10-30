@@ -127,6 +127,20 @@
         document.querySelector("#instruction p").remove();
     }
 
+    function shuffle() {
+        let shuffleResult= [];
+        let answerCopy = answer;
+        while(answerCopy.length > 0) {
+            let arrayElement = answerCopy.splice(getRandomInt(answerCopy.length), 1);
+            shuffleResult.push(arrayElement[0]);
+        }
+        return shuffleResult;
+    }
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+
     // drop zone
     source.addEventListener("dragover", dragover_handler);
     source.addEventListener("drop", drop_handler_source);
