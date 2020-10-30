@@ -56,6 +56,11 @@
         });
     }
 
+    function initGame() {
+        unordenedList = shuffle(answer);
+        renderUnordonnedList();
+    }
+
     function resetList() {
         clearLists();
         ordenedList = [];
@@ -127,9 +132,9 @@
         document.querySelector("#instruction p").remove();
     }
 
-    function shuffle() {
+    function shuffle(list) {
         let shuffleResult= [];
-        let answerCopy = answer;
+        let answerCopy = list;
         while(answerCopy.length > 0) {
             let arrayElement = answerCopy.splice(getRandomInt(answerCopy.length), 1);
             shuffleResult.push(arrayElement[0]);
@@ -152,8 +157,7 @@
     btnSubmit.addEventListener("click", submit);
 
     // init
-    renderUnordonnedList();
-    renderOrdonedList();
+    initGame();
 
 </script>
 
