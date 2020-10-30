@@ -26,7 +26,7 @@
 
     // global variables
     var answer = ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"];
-    var unordenedList = ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"];
+    var unordenedList = [];
     var ordenedList = [];
     const source = document.querySelector("#source");
     const target = document.querySelector("#target");
@@ -64,6 +64,7 @@
     function resetList() {
         clearLists();
         ordenedList = [];
+        unordenedList = shuffle(answer);
         renderUnordonnedList();
     }
 
@@ -134,7 +135,8 @@
 
     function shuffle(list) {
         let shuffleResult= [];
-        let answerCopy = list;
+        let answerCopy = list.concat();
+        console.log(answerCopy);
         while(answerCopy.length > 0) {
             let arrayElement = answerCopy.splice(getRandomInt(answerCopy.length), 1);
             shuffleResult.push(arrayElement[0]);
