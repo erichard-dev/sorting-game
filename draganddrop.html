@@ -135,8 +135,7 @@
 
     function shuffle(list) {
         let shuffleResult= [];
-        let answerCopy = list.concat();
-        console.log(answerCopy);
+        let answerCopy = list.concat();// create a copy of an array instead of passing the ref
         while(answerCopy.length > 0) {
             let arrayElement = answerCopy.splice(getRandomInt(answerCopy.length), 1);
             shuffleResult.push(arrayElement[0]);
