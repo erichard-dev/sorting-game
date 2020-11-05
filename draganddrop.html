@@ -9,8 +9,7 @@
 <body>
     <header></header>
     <main>
-        <section id="instruction">Consigne : Ordonner la liste des planètes du système solaire selon la distance
-            croissante avec le soleil</section>
+        <section id="instruction">Consigne : <span></span></section>
         <section id="game">
             <ul id="source">
             </ul>
@@ -19,20 +18,41 @@
         <section id="controls">
             <button id="reset">reset</button>
             <button id="submit">submit</button>
+            <button id="next">next</button>
         </section>
     </main>
     <footer></footer>
 </body>
 <script>
 
+    // mock data
+    const games =
+        [
+            {
+                instruction: "Ordonner la liste des planètes du système solaire selon la distance croissante avec le soleil.",
+                answer: ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"]
+            },
+            {
+                instruction: "Ordonner la liste de nombre dans l'ordre croissant.",
+                answer: [1,2,3,4,5]
+            },
+            {
+                instruction: "Ordonner la liste de nombre dans l'ordre décroissant.",
+                answer: [5,4,3,2,1]
+            }
+        ];
+
     // global variables
-    var answer = ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"];
+    var answer;
+    var instruction;
+    var cpt = 0;
     var unordenedList = [];
     var ordenedList = [];
     const source = document.querySelector("#source");
     const target = document.querySelector("#target");
     const btnReset = document.querySelector("#reset");
     const btnSubmit = document.querySelector("#submit");
+    const btnNext = document.querySelector("#next");
 
 
     function renderUnordonnedList() {
@@ -57,9 +77,18 @@
         });
     }
 
+    function renderInstruction() {
+        let instructionElement = document.querySelector("#instruction > span");
+        instructionElement.textContent = instruction;
+    }
+
     function initGame() {
+        let game = games[0];
+        answer = game.answer;
+        instruction = game.instruction;
         unordenedList = shuffle(answer);
         renderUnordonnedList();
+        renderInstruction();
     }
 
     function resetList() {
@@ -127,6 +156,10 @@
         return ordenedList.toString() == answer.toString();
     }
 
+    function next() {
+
+    }
+
     function displayMessage(message) {
         let instructionElement = document.querySelector("#instruction");
         let flashMessage = document.createElement("p");
@@ -161,6 +194,7 @@
     // buttons
     btnReset.addEventListener("click", resetList);
     btnSubmit.addEventListener("click", submit);
+    btnNext.addEventListener("click", next);
 
     // init
     initGame();
