@@ -34,11 +34,11 @@
             },
             {
                 instruction: "Ordonner la liste de nombre dans l'ordre croissant.",
-                answer: [1,2,3,4,5]
+                answer: ["1", "2", "3", "4", "5"]
             },
             {
                 instruction: "Ordonner la liste de nombre dans l'ordre décroissant.",
-                answer: [5,4,3,2,1]
+                answer: ["5", "4", "3", "2", "1"]
             }
         ];
 
@@ -46,8 +46,8 @@
     var answer;
     var instruction;
     var cpt = 0;
-    var unordenedList = [];
-    var ordenedList = [];
+    var unordenedList;
+    var ordenedList;
     const source = document.querySelector("#source");
     const target = document.querySelector("#target");
     const btnReset = document.querySelector("#reset");
@@ -83,10 +83,12 @@
     }
 
     function initGame() {
-        let game = games[0];
+        let game = games[cpt];
         answer = game.answer;
         instruction = game.instruction;
         unordenedList = shuffle(answer);
+        ordenedList = [];
+        clearLists();
         renderUnordonnedList();
         renderInstruction();
     }
@@ -157,7 +159,13 @@
     }
 
     function next() {
-
+        cpt += 1;
+        if(cpt < games.length) {
+            initGame();
+        }else{
+            cpt = 0;
+            initGame();
+        }
     }
 
     function displayMessage(message) {
