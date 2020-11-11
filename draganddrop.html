@@ -25,24 +25,8 @@
 </body>
 <script>
 
-    // mock data
-    const riddles =
-        [
-            {
-                instruction: "Ordonner la liste des planètes du système solaire selon la distance croissante avec le soleil.",
-                answer: ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"]
-            },
-            {
-                instruction: "Ordonner la liste de nombre dans l'ordre croissant.",
-                answer: ["1", "2", "3", "4", "5"]
-            },
-            {
-                instruction: "Ordonner la liste de nombre dans l'ordre décroissant.",
-                answer: ["5", "4", "3", "2", "1"]
-            }
-        ];
-
     // global variables
+    var riddles;
     var answer;
     var instruction;
     var cpt = 0;
@@ -83,6 +67,23 @@
     }
 
     function initGame() {
+        var riddlesTmp = [];
+        fetch('http://private.localhost/sortinggame/api.php')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(array => {
+                    var tmp = { instruction: array.instruction, answer: JSON.parse(array.answer) };
+                    riddlesTmp.push(tmp);
+                })
+                return riddlesTmp;
+            })
+            .then((response) => {
+                riddles = response;
+                initRiddle(); 
+            });
+    }
+
+    function initRiddle() {
         let game = riddles[cpt];
         answer = game.answer;
         instruction = game.instruction;
@@ -160,11 +161,11 @@
 
     function next() {
         cpt += 1;
-        if(cpt < riddles.length) {
-            initGame();
-        }else{
+        if (cpt < riddles.length) {
+            initRiddle();
+        } else {
             cpt = 0;
-            initGame();
+            initRiddle();
         }
     }
 
