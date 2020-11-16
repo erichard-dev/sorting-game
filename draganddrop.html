@@ -67,14 +67,12 @@
     }
 
     function initGame() {
-        fetch('http://private.localhost/sortinggame/api.php')
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(array => {
-                    var tmp = { instruction: array.instruction, answer: JSON.parse(array.answer) };
-                    riddles.push(tmp);
-                })
-                initRiddle(); 
+        fetch('http://private.localhost/draganddrop/data.json')
+            .then(response => response.json()).then((json) => {
+                json.riddles.forEach((object) => {
+                    riddles.push({ instruction: object.instruction, answer: object.answer });
+                });
+                initRiddle();
             });
     }
 
