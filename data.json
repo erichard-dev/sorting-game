@@ -1,0 +1,16 @@
+{ "riddles" : 
+    [
+        {
+            "instruction": "Ordonner la liste des plantes du systme solaire selon la distance croissante avec le soleil.",
+            "answer": ["mercure", "venus", "terre", "mars", "jupitère", "saturne", "uranus", "neptune"]
+        },
+        {
+            "instruction": "Ordonner la liste de nombres dans l'ordre croissant",
+            "answer": ["1", "2", "3", "4", "5"]
+        },
+        {
+            "instruction": "Ordonner la liste de nombres dans l'ordre décroissant",
+            "answer": ["5", "4", "3", "2", "1"]
+        }
+    ]
+}
