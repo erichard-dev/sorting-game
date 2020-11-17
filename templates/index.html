@@ -67,7 +67,7 @@
     }
 
     function initGame() {
-        fetch('http://0.0.0.0:5000/static/js/data.json')
+        fetch('http://0.0.0.0:5000/data')
             .then(response => response.json()).then((json) => {
                 json.riddles.forEach((object) => {
                     riddles.push({ instruction: object.instruction, answer: object.answer });
