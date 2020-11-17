@@ -1,7 +1,10 @@
 FROM python:3
 
+RUN pip3 install flask
+
 WORKDIR /usr/src/app
 
 COPY . .
 
-CMD ["python3", "-m", "http.server"]
+ENTRYPOINT ["python"]
+CMD ["app.py"]
