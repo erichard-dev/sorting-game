@@ -67,7 +67,7 @@
     }
 
     function initGame() {
-        fetch('http://private.localhost/draganddrop/data.json')
+        fetch('./data.json')
             .then(response => response.json()).then((json) => {
                 json.riddles.forEach((object) => {
                     riddles.push({ instruction: object.instruction, answer: object.answer });
