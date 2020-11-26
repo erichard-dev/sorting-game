@@ -26,4 +26,4 @@ Have fun !
 
 PS1 : Any comment about how to improve my code is more than welcome.
 
-### PS2 : You could have trouble running docker cmd inside 'strat-app.sh' script. If so prefix script with sudo (cf. https://docs.docker.com/engine/install/linux-postinstall/).
+### PS2 : You could have trouble running docker cmd inside build and run scripts. If so run script with sudo (cf. https://docs.docker.com/engine/install/linux-postinstall/).
