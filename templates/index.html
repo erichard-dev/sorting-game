@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="draganddrop.css">
+    <link rel="stylesheet" href="http://0.0.0.0:5000/static/css/draganddrop.css">
 </head>
 
 <body>
@@ -67,7 +67,7 @@
     }
 
     function initGame() {
-        fetch('./data.json')
+        fetch('http://0.0.0.0:5000/data')
             .then(response => response.json()).then((json) => {
                 json.riddles.forEach((object) => {
                     riddles.push({ instruction: object.instruction, answer: object.answer });
