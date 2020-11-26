@@ -12,25 +12,14 @@
     const btnNext = document.querySelector("#next");
 
 
-    function renderUnordonnedList() {
-        unordenedList.forEach(itemName => {
+    function renderList(data, UIElement) {
+        data.forEach(itemName => {
             let item = document.createElement("li");
             item.textContent = itemName;
             item.setAttribute("id", itemName);
             item.setAttribute("draggable", true);
             item.addEventListener("dragstart", dragstart_handler);
-            source.appendChild(item);
-        });
-    }
-
-    function renderOrdonedList() {
-        ordenedList.forEach(itemName => {
-            let item = document.createElement("li");
-            item.textContent = itemName;
-            item.setAttribute("id", itemName);
-            item.setAttribute("draggable", true);
-            item.addEventListener("dragstart", dragstart_handler);
-            target.appendChild(item);
+            UIElement.appendChild(item);
         });
     }
 
@@ -53,7 +42,7 @@
         unordenedList = shuffle(riddles[cpt].answer);
         ordenedList = [];
         clearLists();
-        renderUnordonnedList();
+        renderList(unordenedList, source);
         renderInstruction();
     }
 
@@ -61,7 +50,7 @@
         clearLists();
         ordenedList = [];
         unordenedList = shuffle(riddles[cpt].answer);
-        renderUnordonnedList();
+        renderList(unordenedList, source);
     }
 
     function clearLists() {
@@ -88,8 +77,8 @@
             ordenedList.push(data);
             unordenedList.splice(unordenedList.indexOf(data), 1);
             clearLists();
-            renderOrdonedList();
-            renderUnordonnedList();
+            renderList(ordenedList, target);
+            renderList(unordenedList, source);
         }
     }
 
@@ -101,8 +90,8 @@
             unordenedList.push(data);
             ordenedList.splice(ordenedList.indexOf(data), 1);
             clearLists();
-            renderOrdonedList();
-            renderUnordonnedList();
+            renderList(ordenedList, target);
+            renderList(unordenedList, source);
         }
     }
 
