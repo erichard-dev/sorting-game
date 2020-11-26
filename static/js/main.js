@@ -2,8 +2,6 @@
 
     // global variables
     var riddles = [];
-    var answer;
-    var instruction;
     var cpt = 0;
     var unordenedList;
     var ordenedList;
@@ -38,7 +36,7 @@
 
     function renderInstruction() {
         let instructionElement = document.querySelector("#instruction > span");
-        instructionElement.textContent = instruction;
+        instructionElement.textContent = riddles[cpt].instruction;
     }
 
     function initGame() {
@@ -52,10 +50,7 @@
     }
 
     function initRiddle() {
-        let game = riddles[cpt];
-        answer = game.answer;
-        instruction = game.instruction;
-        unordenedList = shuffle(answer);
+        unordenedList = shuffle(riddles[cpt].answer);
         ordenedList = [];
         clearLists();
         renderUnordonnedList();
@@ -65,7 +60,7 @@
     function resetList() {
         clearLists();
         ordenedList = [];
-        unordenedList = shuffle(answer);
+        unordenedList = shuffle(riddles[cpt].answer);
         renderUnordonnedList();
     }
 
@@ -124,7 +119,7 @@
     }
 
     function hadWon() {
-        return ordenedList.toString() == answer.toString();
+        return ordenedList.toString() == riddles[cpt].answer.toString();
     }
 
     function next() {
