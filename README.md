@@ -12,7 +12,7 @@ prerequisite :
 start project :
 
 * execute shell CMD 'start-app.sh'
-* open any web browser at 'http://localhost:8000'
+* open any web browser at 'http://0.0.0.0:5000/'
 
 You should now see my little application.
 Have fun !
