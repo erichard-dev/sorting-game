@@ -1,0 +1,1 @@
+docker build --tag draganddropprod:1.0 -f ./docker/Dockerfile_prod .

@@ -1,0 +1,1 @@
+docker build --tag draganddropdev:1.0 -f ./docker/Dockerfile_dev .
