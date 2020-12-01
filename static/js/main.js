@@ -15,10 +15,11 @@
     function renderList(data, UIElement) {
         data.forEach(itemName => {
             let item = document.createElement("li");
-            item.textContent = itemName;
-            item.setAttribute("id", itemName);
+            item.textContent = itemName.answer;
+            item.setAttribute("id", itemName.answer);
             item.setAttribute("draggable", true);
             item.addEventListener("dragstart", dragstart_handler);
+            item.style.backgroundColor = itemName.color;
             UIElement.appendChild(item);
         });
     }
@@ -32,14 +33,15 @@
         fetch('http://0.0.0.0:5000/data')
             .then(response => response.json()).then((json) => {
                 json.riddles.forEach((object) => {
-                    riddles.push({ instruction: object.instruction, answer: object.answer });
+                    bubbleSort(object.answers);
+                    riddles.push({ instruction: object.instruction, answers: object.answers });
                 });
                 initRiddle();
             });
     }
 
     function initRiddle() {
-        unordenedList = shuffle(riddles[cpt].answer);
+        unordenedList = shuffle(riddles[cpt].answers);
         ordenedList = [];
         clearLists();
         renderList(unordenedList, source);
@@ -49,7 +51,7 @@
     function resetList() {
         clearLists();
         ordenedList = [];
-        unordenedList = shuffle(riddles[cpt].answer);
+        unordenedList = shuffle(riddles[cpt].answers);
         renderList(unordenedList, source);
     }
 
@@ -73,9 +75,8 @@
         ev.preventDefault();
         // Get the id of the target and add the moved element to the target's DOM
         const data = ev.dataTransfer.getData("application/my-app");
-        if (!ordenedList.includes(data)) {
-            ordenedList.push(data);
-            unordenedList.splice(unordenedList.indexOf(data), 1);
+        if (!self_drag_and_drop(ordenedList, data)) {
+            ordenedList.push(unordenedList.splice(indexOf(unordenedList, data), 1)[0]);
             clearLists();
             renderList(ordenedList, target);
             renderList(unordenedList, source);
@@ -86,13 +87,36 @@
         ev.preventDefault();
         // Get the id of the target and add the moved element to the target's DOM
         const data = ev.dataTransfer.getData("application/my-app");
-        if (!unordenedList.includes(data)) {
-            unordenedList.push(data);
-            ordenedList.splice(ordenedList.indexOf(data), 1);
+        if (!self_drag_and_drop(unordenedList, data)) {
+            unordenedList.push(ordenedList.splice(indexOf(ordenedList, data), 1)[0]);
             clearLists();
             renderList(ordenedList, target);
             renderList(unordenedList, source);
         }
+    }
+
+    function self_drag_and_drop(list, item) {
+        let i = 0;
+        let find = false;
+        while(i<list.length && !find) {
+            find = list[i].answer == item;
+            i += 1;
+        }
+        return find;
+    }
+
+    function indexOf(list, item) {
+        let index = -1;
+        let i = 0;
+        let find = false;
+        while(i<list.length && !find) {
+            find = list[i].answer == item;
+            i += 1;
+        }
+        if(find) {
+            index = i-1;
+        }
+        return index;
     }
 
     function submit() {
@@ -108,7 +132,13 @@
     }
 
     function hadWon() {
-        return ordenedList.toString() == riddles[cpt].answer.toString();
+        let won = ordenedList.length == riddles[cpt].answers.length;
+        let i = 0;
+        while(i<riddles[cpt].answers.length && won) {
+            won = ordenedList[i].answer == riddles[cpt].answers[i].answer;
+            i += 1;
+        }
+        return won;
     }
 
     function next() {
@@ -140,6 +170,25 @@
             shuffleResult.push(arrayElement[0]);
         }
         return shuffleResult;
+    }
+
+    function bubbleSort(list) {
+        let c;
+        for(b=1;b<list.length; b++) {
+            c = 0;
+            while(c<list.length-1) {
+                if(list[c].order>list[c+1].order) {
+                    swap(list, c, c+1);
+                }
+                c+=1;
+            }
+        }
+    }
+
+    function swap(list, a, b) {
+        let sup = list[a];
+        list[a] = list[b];
+        list[b] = sup;
     }
 
     function getRandomInt(max) {
